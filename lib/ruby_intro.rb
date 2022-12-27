@@ -27,9 +27,8 @@ def sum_to_n? arr, n
   return false if len <= 1
   for x in 1..len -1
     for y in 1..len -1
+      next if x==y## ไม่เอาตัวซ้ำ
       if arr[x]+arr[y] == n
-        puts x
-        puts y
         checker = true
         break
       end
@@ -38,28 +37,49 @@ def sum_to_n? arr, n
   return checker
 end
 
-
 # Part 2
-
 def hello(name)
   # YOUR CODE HERE
-
+  return "Hello, #{name}"
 end
 
 def starts_with_consonant? s
   # YOUR CODE HERE
+  resault = false
+  return false if s.length == 0
+  s=s.downcase
+  cons = "bcdfghjklmnpqrstvwxz"
+  cons.split("").each{|x| 
+  if x == s[0]
+    resault = true
+    break
+  end
+  }
+  return resault
 end
 
 def binary_multiple_of_4? s
-  # YOUR CODE HERE
+  # YOUR CODE HERE ##หารด้วย 4 ลงตัว เเสดงว่า จะต้องลงท้ายด้วย 00 
+  return false if s.length == 0
+  s.split("").each{|x| return false if x!="1" and x!="0"}
+  return true if s.to_i(2) %4 == 0
+  return false
 end
 
 # Part 3
 
 class BookInStock
-# YOUR CODE HERE
-end
-
-puts sum_to_n?([-1, -2, 3, 4, 5, -8], -3)
-puts sum_to_n?([-1, -2, 3, 4, 5, -8], 12)
-puts sum_to_n?([-1, -2, 3, 4, 6, -8], 12)
+  # YOUR CODE HERES
+    attr_accessor :isbn
+    attr_accessor :price
+    def initialize(isbn,price)
+      @isbn=isbn
+      @price=price
+      if @price <= 0 or @isbn.empty? 
+        raise ArgumentError
+      end
+    end
+    def price_as_string()
+      return "$#{'%.2f' % @price}"
+    end
+  end
